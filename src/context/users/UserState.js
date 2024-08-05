@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import UserContext from "./userContext";
 
 const UserState = (props) => {
-  const host = "http://localhost:5000";
+  const host = process.env.HOST;
 
   const [loading, setLoading] = useState(null); 
 

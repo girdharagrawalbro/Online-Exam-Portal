@@ -32,7 +32,7 @@ const News = () => {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:5000/api/news/${id}`);
+      await axios.delete(`https://onlineexam-rcrg.onrender.com/api/news/${id}`);
       setNewsItems(newsItems.filter((news) => news._id !== id));
     } catch (error) {
       console.error("Error deleting news:", error);

@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const mongoURI = "mongodb://localhost:27017/onlineexam"; // Replace with your actual URI
+const mongoURI = process.env.URI;
 
 const connectToMongo = async () => {
   try {
@@ -8,7 +8,6 @@ const connectToMongo = async () => {
     console.log('Connected to MongoDB successfully');
   } catch (err) {
     console.error(err);
-    // Handle connection errors appropriately (e.g., process.exit(1))
   }
 };
 

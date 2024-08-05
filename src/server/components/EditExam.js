@@ -16,7 +16,7 @@ const EditExam = ({ exam, onClose, onSave }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.put(`http://localhost:5000/api/exams/${exam._id}`, formData);
+      const response = await axios.put(`https://onlineexam-rcrg.onrender.com/api/exams/${exam._id}`, formData);
       onSave(response.data); // Update the exam list
       onClose(); // Close the form after successful submission
     } catch (error) {

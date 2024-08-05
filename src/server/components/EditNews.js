@@ -14,7 +14,7 @@ const EditNews = ({ news, onClose, onSave }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.put(`http://localhost:5000/api/news/${news._id}`, formData);
+      const response = await axios.put(`https://onlineexam-rcrg.onrender.com/api/news/${news._id}`, formData);
       onSave(response.data); // Pass the updated news to the parent component
     } catch (error) {
       console.error("Error updating news:", error);

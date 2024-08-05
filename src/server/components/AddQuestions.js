@@ -33,7 +33,7 @@ const AddQuestions = ({ onClose, onSave, examId }) => {
     }
 
     try {
-      await axios.post("http://localhost:5000/api/exams/addquestions", {
+      await axios.post("https://onlineexam-rcrg.onrender.com/api/exams/addquestions", {
         examId,
         question: {
           text: formData.text,

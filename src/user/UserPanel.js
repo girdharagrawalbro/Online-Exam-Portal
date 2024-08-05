@@ -17,7 +17,7 @@ const UserPanel = () => {
   const [loading, setLoading] = useState(true);
   const [startedExams, setStartedExams] = useState([]);
 
-  const host = "http://localhost:5000";
+  const host = "https://onlineexam-rcrg.onrender.com";
   const authToken = localStorage.getItem("token");
 
   useEffect(() => {

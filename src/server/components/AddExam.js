@@ -16,7 +16,7 @@ const AddExam = ({ onClose, onAdd }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:5000/api/exams", formData);
+      await axios.post("https://onlineexam-rcrg.onrender.com/api/exams", formData);
       onAdd(); // Refresh the exams list
       onClose(); // Close the form after successful submission
     } catch (error) {

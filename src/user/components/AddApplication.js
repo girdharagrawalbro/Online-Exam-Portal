@@ -6,7 +6,7 @@ const AddApplication = ({ onClose, onApply, exam, user }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('http://localhost:5000/api/exams/add-applications', {
+      await axios.post('https://onlineexam-rcrg.onrender.com/api/exams/add-applications', {
         user: user._id,
         exam: exam._id,
       });
