@@ -1,9 +1,9 @@
 const express = require("express");
-const Exam = require("../modules/Exam");
-const Application = require("../modules/Application");
+const Exam = require("../models/Exam");
+const Application = require("../models/Application");
 const router = express.Router();
 const bodyParser = require('body-parser');
-
+const UserExam = require('../models/UserExam');
 // Middleware to parse JSON
 router.use(bodyParser.json());
 
@@ -259,5 +259,70 @@ router.delete('/:examId/questions/:questionId', async (req, res) => {
   }
 });
 
+router.post('/start/:id', async (req, res) => {
+  try {
+    const examId = req.params.id;
+
+    // Find the exam by ID
+    const exam = await Exam.findById(examId);
+
+    if (!exam) {
+      return res.status(404).json({ message: 'Exam not found' });
+    }
+
+    // Check if the exam is already started
+    if (exam.status === 'ongoing') {
+      return res.status(400).json({ message: 'Exam is already started' });
+    }
+
+    // Update the exam status to 'started'
+    exam.status = 'ongoing';
+    await exam.save();
+
+    res.status(200).json({ message: 'Exam started successfully', exam });
+  } catch (error) {
+    console.error('Error starting exam:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
+// Save user answers
+router.post('/:examId/save', async (req, res) => {
+  try {
+    const { userId, answers } = req.body;
+    let userExam = await UserExam.findOne({ userId, examId: req.params.examId });
+
+    if (!userExam) {
+      userExam = new UserExam({ userId, examId: req.params.examId, answers, isSubmitted: false });
+    } else {
+      userExam.answers = answers;
+    }
+
+    await userExam.save();
+    res.json({ message: 'Exam saved successfully' });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
+// Submit user answers
+router.post('/:examId/submit', async (req, res) => {
+  try {
+    const { userId, answers } = req.body;
+    let userExam = await UserExam.findOne({ userId, examId: req.params.examId });
+
+    if (!userExam) {
+      userExam = new UserExam({ userId, examId: req.params.examId, answers, isSubmitted: true });
+    } else {
+      userExam.answers = answers;
+      userExam.isSubmitted = true;
+    }
+
+    await userExam.save();
+    res.json({ message: 'Exam submitted successfully' });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
 
 module.exports = router;

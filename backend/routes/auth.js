@@ -1,5 +1,5 @@
 const express = require("express");
-const User = require("../modules/User");
+const User = require("../models/User");
 const router = express.Router();
 
 const { check, body, validationResult } = require("express-validator");
@@ -151,6 +151,19 @@ router.post(
     }
   }
 );
+
+// Get user details by ID
+router.get('/:userId', async (req, res) => {
+  try {
+    const user = await User.findById(req.params.userId);
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+    res.json(user);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
 
 // Route to get all users
 router.get("/users", async (req, res) => {

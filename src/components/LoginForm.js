@@ -115,10 +115,12 @@ const LoginForm = () => {
                         Remember me
                     </label>
                 </div>
+                <div className="d-flex gap-2 align-items-center">
                 <button type="submit" className="btn btn-primary">
                     Login
                 </button>
                 {error && <p className="text-danger mt-2">{error}</p>}
+                </div>
             </form>
             <div className="py-4 text-light">
                 <h5>

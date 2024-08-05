@@ -1,40 +1,25 @@
-// Utility
 import React, { useContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-
-// Components
 import Header from "../components/Header";
 import Exambox from "../components/Exambox";
 import AlertMessage from "../components/AlertMessage";
-// import Notifications from "./components/Notifications";
 import ExamContext from "../context/exams/examContext";
 import AddApplication from "./components/AddApplication";
 
-// Context
-
 const UserPanel = () => {
   const navigate = useNavigate();
-
-  // Application and exam context
-  const {
-    applicationExams,
-    userAppliedExams,
-    fetchExams,
-    error,
-  } = useContext(ExamContext);
-
-  // User state and other local state
+  const { applicationExams, userAppliedExams, fetchExams,ongoingExams, error } = useContext(ExamContext);
   const [alertMessage, setAlertMessage] = useState("");
   const [applyExam, setApplyExam] = useState(null);
   const [activeTab, setActiveTab] = useState("live");
   const [user, setUser] = useState(null);
   const [applications, setUserApplications] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [startedExams, setStartedExams] = useState([]);
 
   const host = "http://localhost:5000";
   const authToken = localStorage.getItem("token");
 
-  // Fetch user data
   useEffect(() => {
     if (!authToken) {
       setAlertMessage("You are not logged in. Redirecting to login page...");
@@ -51,7 +36,7 @@ const UserPanel = () => {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            "authtoken": authToken,
+            authtoken: authToken,
           },
         });
         const fetchedUser = await response.json();
@@ -66,13 +51,12 @@ const UserPanel = () => {
     fetchUserData();
   }, [authToken, navigate]);
 
-  // Fetch Exams whose application is live
-  useEffect(()=>{
+  useEffect(() => {
     fetchExams("application-process");
+    fetchExams("ongoing");
   }, []);
 
-  // Fetch user applications
-  useEffect(() => {
+    useEffect(() => {
     if (user && user._id) {
       const fetchUserApplications = async () => {
         try {
@@ -97,12 +81,21 @@ const UserPanel = () => {
     }
   }, [user]);
 
+  // Poll for exam status updates
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      fetchExams("application-process");
+    }, 10000); // Poll every 10 seconds
+
+    return () => clearInterval(intervalId);
+  }, [fetchExams]);
+
   if (loading) {
-    return <div>Loading...</div>;
+    return <h2 className="text-light mt-5">Loading...</h2>;
   }
 
   if (!user) {
-    return <div>No data available</div>;
+    return <h2 className="text-warning mt-5">No data available</h2>;
   }
 
   const handleApply = (exam) => {
@@ -114,8 +107,6 @@ const UserPanel = () => {
   };
 
   const renderContent = () => {
-    if (loading) return <div>Loading...</div>;
-
     switch (activeTab) {
       case "live":
         return (
@@ -165,14 +156,23 @@ const UserPanel = () => {
           {applyExam && (
             <AddApplication
               onClose={handleClose}
-              onApply={fetchExams()}
+              onApply={fetchExams}
               exam={applyExam}
               user={user}
             />
           )}
-          {/* <Notifications /> */}
+          {ongoingExams.length > 0 && (
+            <div className="alert alert-info position-fixed" role="alert">
+              You have exams scheduled for today!
+            </div>
+          )}
+          {startedExams.length > 0 && (
+            <div className="alert alert-success" role="alert">
+              Exams started! Please proceed.
+            </div>
+          )}
           <Header headtext="User Panel" user="true" />
-          <div className="container-fluid p-3 mt-4">
+          <div className="container-fluid p-3 mt-5">
             <div className="d-flex justify-content-between align-items-center">
               <p className="px-4 align-items-center text-light text-start">
                 Home Page <i className="fa-solid fa-angle-right"></i>{" "}
@@ -197,24 +197,23 @@ const UserPanel = () => {
                 <h6>Address</h6>
               </div>
             </div>
-            <div className="container d-flex text-dark gap-5">
-              <div className="container bg-light p-0 rounded">
-                <div className="p-4">
-                  <h5>Admit Card</h5>
-                </div>
-                <div className="bg-dark text-light p-1">
-                  <p>Admit card is not available!</p>
-                </div>
-              </div>
-              <div className="container bg-light p-0 rounded">
-                <div className="p-4">
-                  <h5>Result</h5>
-                </div>
-                <div className="bg-dark text-light p-1">
-                  <p>Result is not available!</p>
-                </div>
-              </div>
+            <div className="container text-dark">
+              {ongoingExams.length > 0 ? (
+                <><h6 className="text-bg-light py-2">Ongoing Exams</h6>
+                {ongoingExams.map((exam) => (
+                  <Exambox
+                    key={exam._id}
+                    exam={exam}
+                    ongoing="true"
+                    status={exam.status}
+                    user={user}
+                  />
+                ))}
+                </>) : (
+                <h6 className="bg-light p-2 text-center">No ongoing exams for today.</h6>
+              )}
             </div>
+            
             <br />
             <div className="container text-dark">
               <div className="d-flex gap-3">
@@ -240,6 +239,6 @@ const UserPanel = () => {
       )}
     </>
   );
-};
+}; 
 
 export default UserPanel;

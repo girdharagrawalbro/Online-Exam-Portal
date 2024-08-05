@@ -40,6 +40,7 @@ function App() {
                 <Route path="/" element={<Home />} />
                 <Route path="/register" element={<RegistratonForm />} />
                 <Route path="/user/:authtoken" element={<UserPanel />} />
+                <Route path="/startexam/:examId" element={<UserStartExam />} />
 
 
                 {/* admin section */}

@@ -10,7 +10,6 @@ const LoginForm = (props) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (username === props.adminUsername && password === props.adminPassword) {
-      console.log("Admin logged in");
       // Redirect to admin dashboard or perform other actions
       navigate('/admin/dashboard');  // Example of redirecting to the admin dashboard
       localStorage.setItem('token', 'admin')

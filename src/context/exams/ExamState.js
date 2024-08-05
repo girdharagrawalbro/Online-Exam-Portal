@@ -30,7 +30,8 @@ const ExamState = (props) => {
         setCompletedExams(json);
       } else if (status === "application-process") {
         setApplicationExams(json);
-      } else {
+      }
+      else {
         setExams(json);
       }
     } catch (error) {
@@ -87,7 +88,7 @@ const ExamState = (props) => {
     }
   };
 
-  
+
   return (
     <ExamContext.Provider
       value={{
@@ -104,7 +105,6 @@ const ExamState = (props) => {
         updateApplicationStatus,
         setUpcomingExams,
         error,
-  
       }}
     >
       {props.children}
