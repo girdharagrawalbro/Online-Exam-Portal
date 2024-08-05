@@ -1,0 +1,164 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+/* css for navbar */
+.navbar{
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1;
+}
+body{
+  background-color: #1c1f23;
+}
+/* css for home page */
+.detail-text-box{
+  width: 750px;
+}
+
+/* css for login form  */
+form {
+  background: #fff;
+  border-radius: 5px;
+  padding: 2rem;
+text-align: left;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* css for footer  */
+footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
+
+/* css for admin panel */
+.sidebar{
+  background-color:#2b3035;
+  width:200px;
+  height:92.3vh;
+  top:50px;
+  position: fixed;
+}
+
+.sidebar ul {
+  list-style: none;
+  padding: 1rem;
+}
+
+.sidebar ul li{
+  font-size: 20px;
+  padding: 1rem .5rem;
+  text-align: start;
+
+}
+.sidebar ul li a{
+  color: white;
+  text-decoration: none;
+}
+.main{
+  position: absolute;
+  color:white;
+  left: 200px;
+  top:50px;
+  width:1133px;
+  
+}
+
+.alert{
+  width: max-content;
+  position: absolute;
+  top: 56px;
+  right: 10px;
+  z-index: 1;
+}
+
+/* this card is inspired form this - https://georgefrancis.dev/ */
+
+.card {
+width: 30rem;
+}
+
+
+.linkbox{
+  width: 150px;
+}
+
+/* css for add exam form */
+  /* css for popups */
+
+.add-exam-form,.edit-news-form,.edit-exam-form,.add-application-form, .add-questions-form,.show-questions-box{
+position: fixed;
+width: 350px;
+z-index: 3;
+top: 50%;
+left: 50%;
+transform: translate(-50%, -50%);
+}
+.add-application-form,.add-questions-form,.show-questions-box{
+  width:1000px;
+}
+.show-questions-box{
+  text-align: start;
+  height: 500px;
+  overflow: scroll;
+}
+/* overlay */
+.overlay{
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background-color: #1c1f237a;
+  z-index: 2;
+}
+
+.profile-img{
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+
+.error-box{
+  position: fixed;
+  top: 50px;
+  left: 50%;
+  transform: translate(-50%, -50%); 
+  justify-self: center;
+  align-self: center;
+  width: 350px;
+}
