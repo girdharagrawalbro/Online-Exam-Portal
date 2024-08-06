@@ -7,6 +7,8 @@ import UserPanel from "./user/UserPanel";
 import Home from "./components/Home";
 import Footer from "./components/Footer";
 import UserStartExam from  "./user/UserStartExam"
+import UserResult from  "./user/UserResult"
+
 
 
 // server components
@@ -15,7 +17,6 @@ import News from "./server/News";
 import Exams from "./server/Exams";
 import Users from "./server/Users";
 import Results from "./server/Results";
-import AIRList from "./server/Airlist";
 import AdminLogin from "./server/LoginForm";
 import Applications from "./server/Applications"
 import AdminStartExam from "./server/AdminStartExam"
@@ -41,6 +42,7 @@ function App() {
                 <Route path="/register" element={<RegistratonForm />} />
                 <Route path="/user/:authtoken" element={<UserPanel />} />
                 <Route path="/startexam/:examId" element={<UserStartExam />} />
+                <Route path="/results/:userId/:examId" element={<UserResult />} />
 
 
                 {/* admin section */}
@@ -60,7 +62,6 @@ function App() {
                 <Route path="/admin/results" element={<Results />} />
                 <Route path="/admin/applications" element={<Applications />} />
                 <Route path="/admin/users" element={<Users />} />
-                <Route path="/admin/airList" element={<AIRList />} />
                 <Route path="/adminstartexam/:examid" element={<AdminStartExam />} />
 
 

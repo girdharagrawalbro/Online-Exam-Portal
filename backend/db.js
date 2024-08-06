@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 
-const mongoURI = process.env.URI;
+const mongoURI = "mongodb+srv://girdharagrawalbro:AbnlKNTT3ReFQLZm@cluster0.czsb19m.mongodb.net/onlineexam?retryWrites=true&w=majority&appName=Cluster0";
+// const mongoURI = "mongodb://localhost:27017/onlineexam"
 
 const connectToMongo = async () => {
   try {

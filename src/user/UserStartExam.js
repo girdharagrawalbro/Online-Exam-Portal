@@ -10,7 +10,7 @@ const UserStartExam = () => {
   const [error, setError] = useState(null);
   const [examData, setExamData] = useState(null);
   const [userData, setUserData] = useState(null);
-  const [answers, setAnswers] = useState([]);
+  const [answers, setAnswers] = useState({});
 
   useEffect(() => {
     if (!examId) return;
@@ -18,7 +18,13 @@ const UserStartExam = () => {
       try {
         const examResponse = await axios.get(`https://onlineexam-rcrg.onrender.com/api/exams/${examId}`);
         setExamData(examResponse.data);
-        setAnswers(new Array(examResponse.data.questions.length).fill(null));
+        // Initialize answers as an empty object
+        setAnswers(
+          examResponse.data.questions.reduce((acc, question, index) => {
+            acc[index] = null; // Default to no answer
+            return acc;
+          }, {})
+        );
         setLoading(false);
       } catch (err) {
         console.error('Error fetching exam data:', err);
@@ -35,7 +41,7 @@ const UserStartExam = () => {
     const fetchUserData = async () => {
       try {
         const userResponse = await axios.get(`https://onlineexam-rcrg.onrender.com/api/auth/${userId}`);
-        setUserData(userResponse.data); // Corrected here
+        setUserData(userResponse.data);
         setLoading(false);
       } catch (err) {
         console.error('Error fetching user data:', err);
@@ -45,10 +51,11 @@ const UserStartExam = () => {
     fetchUserData();
   }, [userId]);
 
-  const handleAnswerChange = (questionIndex, optionIndex) => {
-    const updatedAnswers = [...answers];
-    updatedAnswers[questionIndex] = optionIndex;
-    setAnswers(updatedAnswers);
+  const handleAnswerChange = (questionIndex, option) => {
+    setAnswers(prevAnswers => ({
+      ...prevAnswers,
+      [questionIndex]: option
+    }));
   };
 
   const handleSave = async () => {
@@ -62,9 +69,23 @@ const UserStartExam = () => {
 
   const handleSubmit = async () => {
     try {
-      await axios.post(`https://onlineexam-rcrg.onrender.com/api/exams/${examId}/submit`, { userId, answers });
-      alert('Exam submitted successfully! Result will be declared Soon Redirecting');
-      navigate('/results'); // Navigate to results page or a different route
+      const examResponse = await axios.get(`https://onlineexam-rcrg.onrender.com/api/exams/${examId}`);
+      const correctAnswers = examResponse.data.questions.filter((question, index) =>
+        question.correctAnswer === answers[index]
+      ).length;
+      const incorrectAnswers = examResponse.data.questions.length - correctAnswers;
+
+      await axios.post(`https://onlineexam-rcrg.onrender.com/api/exams/${examId}/submit`, {
+        userId,
+        answers,
+        correctAnswers,
+        incorrectAnswers,
+        percentage: (correctAnswers / examResponse.data.questions.length) * 100
+      });
+
+      alert('Exam submitted successfully! Result will be declared soon. Redirecting...');
+      // Optionally navigate to a different page
+      navigate('/results');
     } catch (err) {
       console.error('Error submitting exam:', err);
     }
@@ -123,9 +144,9 @@ const UserStartExam = () => {
                     type="radio"
                     name={`question${index}`}
                     id={`option${index}-${optionIndex}`}
-                    value={optionIndex}
-                    checked={answers[index] === optionIndex}
-                    onChange={() => handleAnswerChange(index, optionIndex)}
+                    value={option}
+                    checked={answers[index] === option}
+                    onChange={() => handleAnswerChange(index, option)}
                   />
                   <label className="form-check-label" htmlFor={`option${index}-${optionIndex}`}>
                     {option}

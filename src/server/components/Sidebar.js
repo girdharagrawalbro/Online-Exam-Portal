@@ -25,9 +25,6 @@ export default function Sidebar () {
       <li>
         <Link to="/admin/users">Users</Link>
       </li>
-      <li>
-        <Link to="/admin/airlist">AIR List</Link>
-      </li>
       </ul>
   </div>  
   </>

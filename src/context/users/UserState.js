@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import UserContext from "./userContext";
 
 const UserState = (props) => {
-  const host = process.env.HOST;
+  const host = "https://onlineexam-rcrg.onrender.com";
 
   const [loading, setLoading] = useState(null); 
 

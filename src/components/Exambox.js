@@ -2,11 +2,18 @@ import React, { useEffect, useState } from "react";
 import AlertMessage from "./AlertMessage";
 import { useNavigate } from "react-router-dom";
 
-const ExamBox = ({ exam, onDelete, onEdit, onApply, edit, apply, application, status, userAppliedExams, showStartButton, onAddQuestions, onShowQuestions, ongoing, user }) => {
+const ExamBox = ({ exam, onDelete, onEdit, onApply, edit, apply, application, status, userAppliedExams, showStartButton, onAddQuestions, onShowQuestions, ongoing, user, userExams, userData}) => {
   const navigate = useNavigate();
+
+  const isExamCompleted = userExams?.some((userExam) => userExam.examId === exam._id && userExam.isSubmitted) || false;
+
   const [examStatus, setExamStatus] = useState(status);
   const [showAlert, setShowAlert] = useState(false);
-
+const handleResult =  () => {
+  navigate(`/results/${userData._id}/${exam._id}`, {
+    state: { examData: exam, userData }
+  });
+} 
   useEffect(() => {
     const currentDate = new Date();
     const applicationEndDate = new Date(exam.applicationEndDate);
@@ -72,10 +79,15 @@ const ExamBox = ({ exam, onDelete, onEdit, onApply, edit, apply, application, st
         <p className="card-text">{exam.description}</p>
         <p className="card-text">Exam Date: {new Date(exam.date).toDateString()}</p>
         <p className="card-text">Exam Time: {exam.time}</p>
-        {ongoing ? (
-          <button className="btn btn-primary" onClick={handleUserStartExam}>Join</button>
-        ) : ""
-        }
+        {!user ? "" : (ongoing && !isExamCompleted ? (
+        <button className="btn btn-primary" onClick={handleUserStartExam}>Start Exam</button>
+      ) : (
+        <button className="btn btn-secondary" disabled={true}>Exam Completed</button>
+      ))}
+      
+      {isExamCompleted && (
+        <button className="btn btn-success mx-2" onClick={handleResult}>View Results</button>
+      )}
         {applicationEnded ? (
           ongoing ? "" :
           <p className="card-text text-danger">Application Ended</p>

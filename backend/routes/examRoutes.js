@@ -285,8 +285,6 @@ router.post('/start/:id', async (req, res) => {
     res.status(500).json({ message: 'Server error' });
   }
 });
-
-// Save user answers
 router.post('/:examId/save', async (req, res) => {
   try {
     const { userId, answers } = req.body;
@@ -298,6 +296,16 @@ router.post('/:examId/save', async (req, res) => {
       userExam.answers = answers;
     }
 
+    // Calculate correct and incorrect answers
+    const exam = await Exam.findById(req.params.examId);
+    const correctAnswers = exam.questions.filter((q, index) => q.correctOption === answers[index]).length;
+    const incorrectAnswers = exam.questions.length - correctAnswers;
+    const percentage = (correctAnswers / exam.questions.length) * 100;
+
+    userExam.correctAnswers = correctAnswers;
+    userExam.incorrectAnswers = incorrectAnswers;
+    userExam.percentage = percentage;
+
     await userExam.save();
     res.json({ message: 'Exam saved successfully' });
   } catch (err) {
@@ -305,7 +313,6 @@ router.post('/:examId/save', async (req, res) => {
   }
 });
 
-// Submit user answers
 router.post('/:examId/submit', async (req, res) => {
   try {
     const { userId, answers } = req.body;
@@ -318,11 +325,47 @@ router.post('/:examId/submit', async (req, res) => {
       userExam.isSubmitted = true;
     }
 
+    // Calculate correct and incorrect answers
+    const exam = await Exam.findById(req.params.examId);
+    const correctAnswers = exam.questions.filter((q, index) => q.correctOption === answers[index]).length;
+    const incorrectAnswers = exam.questions.length - correctAnswers;
+    const percentage = (correctAnswers / exam.questions.length) * 100;
+
+    userExam.correctAnswers = correctAnswers;
+    userExam.incorrectAnswers = incorrectAnswers;
+    userExam.percentage = percentage;
+
     await userExam.save();
     res.json({ message: 'Exam submitted successfully' });
   } catch (err) {
     res.status(500).json({ message: err.message });
+  } 
+});
+router.get("/userexams/:userId", async (req, res) => {
+  try {
+    const userExams = await UserExam.find({ userId: req.params.userId });
+    res.json(userExams);
+  } catch (err) {
+    console.error("Failed to fetch user exams", err);
+    res.status(500).json({ message: "Failed to fetch user exams" });
   }
 });
+// Route to get exam data for a specific user and exam
+router.get('/userexams/:userId/:examId', async (req, res) => {
+  const { userId, examId } = req.params;
 
+  try {
+    // Find the specific user exam entry
+    const userExam = await UserExam.findOne({ userId, examId });
+
+    if (!userExam) {
+      return res.status(404).json({ message: 'User exam not found' });
+    }
+
+    res.json(userExam);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
 module.exports = router;
