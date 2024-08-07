@@ -14,7 +14,7 @@ export default function Header({ headtext, admin }) {
               Home
             </Link>
           ) : (
-            <Link to="/admin" className="btn btn-sm btn-primary">
+            <Link to="/admin" className="btn btn-sm btn-primary hide">
               Admin Login
             </Link>
           )

@@ -16,9 +16,8 @@ const UserStartExam = () => {
     if (!examId) return;
     const fetchExamData = async () => {
       try {
-        const examResponse = await axios.get(`https://onlineexam-rcrg.onrender.com/api/exams/${examId}`);
+        const examResponse = await axios.get(`http://localhost:5000/api/exams/${examId}`);
         setExamData(examResponse.data);
-        // Initialize answers as an empty object
         setAnswers(
           examResponse.data.questions.reduce((acc, question, index) => {
             acc[index] = null; // Default to no answer
@@ -40,7 +39,7 @@ const UserStartExam = () => {
 
     const fetchUserData = async () => {
       try {
-        const userResponse = await axios.get(`https://onlineexam-rcrg.onrender.com/api/auth/${userId}`);
+        const userResponse = await axios.get(`http://localhost:5000/api/auth/${userId}`);
         setUserData(userResponse.data);
         setLoading(false);
       } catch (err) {
@@ -60,7 +59,8 @@ const UserStartExam = () => {
 
   const handleSave = async () => {
     try {
-      await axios.post(`https://onlineexam-rcrg.onrender.com/api/exams/${examId}/save`, { userId, answers });
+      const formattedAnswers = Object.values(answers); // Convert object to array of answers
+      await axios.post(`http://localhost:5000/api/exams/${examId}/save`, { userId, answers: formattedAnswers });
       alert('Exam saved successfully');
     } catch (err) {
       console.error('Error saving exam:', err);
@@ -69,23 +69,10 @@ const UserStartExam = () => {
 
   const handleSubmit = async () => {
     try {
-      const examResponse = await axios.get(`https://onlineexam-rcrg.onrender.com/api/exams/${examId}`);
-      const correctAnswers = examResponse.data.questions.filter((question, index) =>
-        question.correctAnswer === answers[index]
-      ).length;
-      const incorrectAnswers = examResponse.data.questions.length - correctAnswers;
-
-      await axios.post(`https://onlineexam-rcrg.onrender.com/api/exams/${examId}/submit`, {
-        userId,
-        answers,
-        correctAnswers,
-        incorrectAnswers,
-        percentage: (correctAnswers / examResponse.data.questions.length) * 100
-      });
-
+      const formattedAnswers = Object.values(answers); // Convert object to array of answers
+      await axios.post(`http://localhost:5000/api/exams/${examId}/submit`, { userId, answers: formattedAnswers });
       alert('Exam submitted successfully! Result will be declared soon. Redirecting...');
-      // Optionally navigate to a different page
-      navigate('/results');
+      navigate('/');
     } catch (err) {
       console.error('Error submitting exam:', err);
     }
@@ -96,12 +83,12 @@ const UserStartExam = () => {
 
   return (
     <>
-      <div className="d-flex text-bg-dark px-3 py-2 align-items-center justify-content-between">
-        <div className="d-flex align-items-center gap-4">
+      <div className="d-flex text-bg-dark px-3 py-2 align-items-center justify-content-between flex-wrap">
+        <div className="d-flex align-items-center gap-4 flex-wrap">
           <div>
             <h4>{examData.title}</h4>
           </div>
-          <div className="text-small text-white-50 text-start align-items-center">
+          <div className="text-small text-white-50 text-start hide align-items-center">
             <div>Duration: 60 mins</div>
             <div>Questions: {examData.questions.length}</div>
           </div>
@@ -111,30 +98,15 @@ const UserStartExam = () => {
           <h6 className="text-small text-white">
             {userData ? userData.name : 'Loading...'}
           </h6>
-          <button onClick={() => navigate(-1)} className="btn btn-outline-light rounded-circle p-2">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="h-5 w-5"
-            >
-              <path d="M18 6 6 18"></path>
-              <path d="m6 6 12 12"></path>
-            </svg>
-            <span className="sr-only">Close</span>
+          <button onClick={() => navigate(-1)} className="btn btn-sm btn-outline-danger">
+            Close
           </button>
         </div>
       </div>
 
       <div className="flex-grow-1 bg-secondary-50 d-flex flex-wrap p-3 d-grid gap-3">
         {examData.questions.map((question, index) => (
-          <div className="text-bg-dark text-start p-4 rounded shadow" key={index}>
+          <div className="text-bg-dark text-start p-4 rounded shadow question-box" key={index}>
             <div className="h5 font-weight-medium mb-3">{question.text}</div>
             <div className="d-grid gap-2">
               {question.options.map((option, optionIndex) => (

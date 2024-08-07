@@ -32,22 +32,26 @@
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
 }
+
 /* css for navbar */
-.navbar{
+.navbar {
   position: fixed;
   top: 0;
   width: 100%;
   z-index: 1;
 }
-body{
+
+body {
   background-color: #1c1f23;
 }
+
 /* css for home page */
-.detail-text-box{
+.detail-text-box {
   width: 750px;
 }
 
@@ -56,7 +60,7 @@ form {
   background: #fff;
   border-radius: 5px;
   padding: 2rem;
-text-align: left;
+  text-align: left;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
@@ -68,11 +72,11 @@ footer {
 }
 
 /* css for admin panel */
-.sidebar{
-  background-color:#2b3035;
-  width:200px;
-  height:92.3vh;
-  top:50px;
+.sidebar {
+  background-color: #2b3035;
+  width: 200px;
+  height: 92.3vh;
+  top: 50px;
   position: fixed;
 }
 
@@ -81,26 +85,28 @@ footer {
   padding: 1rem;
 }
 
-.sidebar ul li{
+.sidebar ul li {
   font-size: 20px;
   padding: 1rem .5rem;
   text-align: start;
 
 }
-.sidebar ul li a{
+
+.sidebar ul li a {
   color: white;
   text-decoration: none;
 }
-.main{
+
+.main {
   position: absolute;
-  color:white;
+  color: white;
   left: 200px;
-  top:50px;
-  width:1133px;
-  
+  top: 50px;
+  width: 1133px;
+
 }
 
-.alert{
+.alert {
   width: max-content;
   position: absolute;
   top: 56px;
@@ -111,35 +117,45 @@ footer {
 /* this card is inspired form this - https://georgefrancis.dev/ */
 
 .card {
-width: 30rem;
+  width: 30rem;
 }
 
 
-.linkbox{
+.linkbox {
   width: 150px;
 }
 
 /* css for add exam form */
-  /* css for popups */
+/* css for popups */
 
-.add-exam-form,.edit-news-form,.edit-exam-form,.add-application-form, .add-questions-form,.show-questions-box{
-position: fixed;
-width: 350px;
-z-index: 3;
-top: 50%;
-left: 50%;
-transform: translate(-50%, -50%);
+.add-exam-form,
+.edit-news-form,
+.edit-exam-form,
+.add-application-form,
+.add-questions-form,
+.show-questions-box {
+  position: fixed;
+  width: 350px;
+  z-index: 3;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
-.add-application-form,.add-questions-form,.show-questions-box{
-  width:1000px;
+
+.add-application-form,
+.add-questions-form,
+.show-questions-box {
+  width: 1000px;
 }
-.show-questions-box{
+
+.show-questions-box {
   text-align: start;
   height: 500px;
   overflow: scroll;
 }
+
 /* overlay */
-.overlay{
+.overlay {
   position: fixed;
   width: 100%;
   height: 100%;
@@ -147,18 +163,52 @@ transform: translate(-50%, -50%);
   z-index: 2;
 }
 
-.profile-img{
+.profile-img {
   width: 50px;
   height: 50px;
   border-radius: 50%;
 }
 
-.error-box{
+.error-box {
   position: fixed;
   top: 50px;
   left: 50%;
-  transform: translate(-50%, -50%); 
+  transform: translate(-50%, -50%);
   justify-self: center;
   align-self: center;
   width: 350px;
+}
+
+/* mobile view css */
+@media (max-width:600px) {
+  .hide {
+    display: none;
+  }
+
+  .m-main {
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+  }
+
+  .detail-text-box {
+    width: 230px;
+  }
+
+  .registration-form,
+  .user-details-box {
+    flex-wrap: wrap;
+  }
+
+  .card {
+    width: 18.5rem;
+    margin: auto;
+  }
+
+  .add-application-form{
+    width:340px
+  }
+  .question-box{
+    width: 18rem;
+    margin: auto;
+  }
 }

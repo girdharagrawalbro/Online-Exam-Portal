@@ -4,19 +4,19 @@ import axios from 'axios';
 import ExamContext from '../context/exams/examContext';
 
 const AdminStartExam = () => {
-  const { examStarted, setExamStarted, examData, setExamData } = useContext(ExamContext);
+  const [ examStarted, setExamStarted ] = useState();
 
   const examId = localStorage.getItem('exam');
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
+  const [examData, setExamData] = useState(null);
   useEffect(() => {
     if (!examId) return;
 
     const fetchExamData = async () => {
       try {
-        const examResponse = await axios.get(`https://onlineexam-rcrg.onrender.com/api/exams/${examId}`);
+        const examResponse = await axios.get(`http://localhost:5000/api/exams/${examId}`);
         setExamData(examResponse.data);
         setLoading(false);
       } catch (err) {
@@ -39,7 +39,7 @@ const AdminStartExam = () => {
 
     if (timeString === examTime || timeString > examTime) {
       try {
-        await axios.post(`https://onlineexam-rcrg.onrender.com/api/exams/start/${examId}`);
+        await axios.post(`http://localhost:5000/api/exams/start/${examId}`);
         setExamStarted(true);
       } catch (err) {
         console.error("Error starting exam:", err);

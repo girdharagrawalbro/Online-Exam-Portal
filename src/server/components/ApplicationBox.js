@@ -6,7 +6,7 @@ const ApplicationBox = ({ application, onAccept, onReject }) => {
   }
 
   return (
-    <div className="d-flex p-1 gap-3 bg-light text-dark rounded-pill align-items-center justify-content-between">
+    <div className="d-flex p-1 gap-3 bg-light text-dark rounded-pill align-items-center justify-content-between my-2">
       <div className="d-flex gap-2 align-items-center">
         <img
           className="profile-img"

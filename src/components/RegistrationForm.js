@@ -72,7 +72,7 @@ const RegistrationForm = () => {
     }
   
     try {
-      const response = await fetch("https://onlineexam-rcrg.onrender.com/api/auth/register", {
+      const response = await fetch("http://localhost:5000/api/auth/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -120,7 +120,7 @@ const RegistrationForm = () => {
       <Header headtext="Register" admin="false" />
       <main className="container-fluid p-5 mt-5">
         <form onSubmit={handleSubmit} className="registration-form">
-          <div className="d-flex">
+          <div className="d-flex registration-form">
             <div className="container">
               <div className="mb-3">
                 <label htmlFor="fullName" className="form-label">
@@ -258,7 +258,7 @@ const RegistrationForm = () => {
               {successMessage}
             </div>
           )}
-          <div className="d-flex justify-content-between">
+          <div className="d-flex justify-content-between flex-wrap">
             <div className="mb-3 form-check">
               <input
                 type="checkbox"
@@ -274,7 +274,7 @@ const RegistrationForm = () => {
                 <div className="text-danger">{errors.terms}</div>
               )}
             </div>
-            <div className="d-flex gap-3">
+            <div className="d-flex gap-3 align-items-center">
               <Link to="/" className="btn btn-primary">
                 Login
               </Link>

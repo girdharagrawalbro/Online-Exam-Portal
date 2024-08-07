@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import ExamContext from "./examContext";
 
 const ExamState = (props) => {
-  const host = "https://onlineexam-rcrg.onrender.com";
+  const host = "http://localhost:5000";
   const [error, setError] = useState(null);
 
   // State hooks for exams and applications
@@ -13,7 +13,6 @@ const ExamState = (props) => {
   const [completedExams, setCompletedExams] = useState([]);
   const [news, setNews] = useState([]);
   const [applications, setApplications] = useState([]);
-
   const fetchExams = async (status = "") => {
     try {
       // API Call to get Exams based on status
@@ -87,7 +86,6 @@ const ExamState = (props) => {
       console.error("Failed to update application status", error);
     }
   };
-
 
   return (
     <ExamContext.Provider

@@ -13,7 +13,7 @@ const ShowQuestions = ({ onClose, onSave, examId }) => {
   useEffect(() => {
     const fetchQuestions = async () => {
       try {
-        const response = await axios.get(`https://onlineexam-rcrg.onrender.com/api/exams/${examId}/questions`);
+        const response = await axios.get(`http://localhost:5000/api/exams/${examId}/questions`);
         setQuestions(response.data.questions);
       } catch (error) {
         console.error("Error fetching questions:", error);
@@ -56,7 +56,7 @@ const ShowQuestions = ({ onClose, onSave, examId }) => {
     }
 
     try {
-      await axios.put(`https://onlineexam-rcrg.onrender.com/api/exams/${examId}/questions/${editingQuestionId}`, {
+      await axios.put(`http://localhost:5000/api/exams/${examId}/questions/${editingQuestionId}`, {
         text: editFormData.text,
         options: editFormData.options,
         correctAnswer: editFormData.options[editFormData.correctAnswer]
@@ -79,7 +79,7 @@ const ShowQuestions = ({ onClose, onSave, examId }) => {
   };
   const handleDelete = async (questionId) => {
     try {
-      await axios.delete(`https://onlineexam-rcrg.onrender.com/api/exams/${examId}/questions/${questionId}`);
+      await axios.delete(`http://localhost:5000/api/exams/${examId}/questions/${questionId}`);
       setQuestions(questions.filter(question => question._id !== questionId)); // Update UI
     } catch (error) {
       console.error("Error deleting question:", error);

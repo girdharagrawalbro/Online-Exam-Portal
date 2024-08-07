@@ -18,7 +18,7 @@ const formatDate = (dateString) => {
 const NewsBox = ({ news, admin, onDelete, onEdit }) => {
   const handleDelete = async () => {
     try {
-      await axios.delete(`https://onlineexam-rcrg.onrender.com/api/news/${news._id}`);
+      await axios.delete(`http://localhost:5000/api/news/${news._id}`);
       onDelete(news._id);
     } catch (error) {
       console.error("Error deleting news:", error);

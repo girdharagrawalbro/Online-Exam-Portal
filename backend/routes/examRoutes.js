@@ -73,7 +73,7 @@ router.get("/applications", async (req, res) => {
 });
 
 // Accept an application
-router.patch("/applications/:applicationId/accept", async (req, res) => {
+router.patch("/applications/:applicationId/accepted", async (req, res) => {
   try {
     const applicationId = req.params.applicationId;
     const updatedApplication = await Application.findByIdAndUpdate(applicationId, { status: "accepted" }, { new: true });
@@ -87,7 +87,7 @@ router.patch("/applications/:applicationId/accept", async (req, res) => {
 });
 
 // Reject an application
-router.patch("/applications/:applicationId/reject", async (req, res) => {
+router.patch("/applications/:applicationId/rejected", async (req, res) => {
   try {
     const applicationId = req.params.applicationId;
     const updatedApplication = await Application.findByIdAndUpdate(applicationId, { status: "rejected" }, { new: true });
@@ -341,6 +341,7 @@ router.post('/:examId/submit', async (req, res) => {
     res.status(500).json({ message: err.message });
   } 
 });
+
 router.get("/userexams/:userId", async (req, res) => {
   try {
     const userExams = await UserExam.find({ userId: req.params.userId });

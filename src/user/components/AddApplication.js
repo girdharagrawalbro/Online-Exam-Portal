@@ -6,7 +6,7 @@ const AddApplication = ({ onClose, onApply, exam, user }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('https://onlineexam-rcrg.onrender.com/api/exams/add-applications', {
+      await axios.post('http://localhost:5000/api/exams/add-applications', {
         user: user._id,
         exam: exam._id,
       });
@@ -49,15 +49,14 @@ const AddApplication = ({ onClose, onApply, exam, user }) => {
     <div className='d-flex justify-content-between align-items-center'>
 <div> 
 
-        <button type="submit" className="btn btn-primary">
+        <button type="submit" className="btn btn-primary mx-3">
           Apply
         </button>
 </div>
-<div className="d-flex gap-5 justify-content-around align-items-center"> 
+<div className="d-flex gap-3 justify-content-around align-items-center"> 
 
 
-        <h6>AddApplication Start - {exam.applicationStartDate}</h6>
-        <h6>AddApplication End - {exam.applicationEndDate}</h6>
+        <h6>Application End - {new Date(exam.applicationEndDate).toDateString()}</h6>
 
 </div>
     </div>

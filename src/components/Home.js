@@ -14,7 +14,6 @@ function Home() {
   const [isApplyOpen, setIsApplyOpen] = useState(false);
   const [isResultOpen, setIsResultOpen] = useState(false);
 
-
   const handleQuicklinkClick = (linkName) => {
     if (linkName === 'Apply') {
       setIsApplyOpen(true);
@@ -37,8 +36,8 @@ function Home() {
     <>
       <Header headtext="Exam Made Easy" />
       <br />
-      <main className="container-fluid p-5 mt-5">
-        <div className="container-xxl d-flex justify-content-between my-4">
+      <main className="container-fluid m-main p-2 mt-5">
+        <div className="container-xxl d-flex justify-content-center gap-5 my-4 flex-wrap">
           <div className="detail-text-box mx-4 text-light">
             <h1 className="text-start">
               Welcome, <br />to Online Exam Portal

@@ -21,7 +21,7 @@ const NewsSection = () => {
   return (
     <div className="container my-3">
       <h2 className="text-light">Notice Board</h2>
-      <div className="mt-3 list-group row gap-2 w-100">
+      <div className="mt-3 list-group row gap-2 w-100 mx-auto">
         {news.map((newsItem) => (
           <NewsBox key={newsItem._id} news={newsItem} admin={false} />
         ))}

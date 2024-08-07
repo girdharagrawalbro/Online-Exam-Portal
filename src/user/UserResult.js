@@ -12,7 +12,7 @@ const UserResult = () => {
   useEffect(() => {
       const fetchExamResult = async () => {
         try {
-          const response = await fetch(`https://onlineexam-rcrg.onrender.com/api/exams/userexams/${userId}/${examId}`);
+          const response = await fetch(`http://localhost:5000/api/exams/userexams/${userId}/${examId}`);
           const data = await response.json();
           setData(data)
         } catch (error) {
@@ -23,7 +23,7 @@ const UserResult = () => {
   }, []);
 console.log(examData)
   if (!userData || !examData ||!data) {
-    return <h2 clssName="text-light mt-5">Loading...</h2>;
+    return <h2 clssName="text-white mt-5">Loading...</h2>;
   }
 
 
