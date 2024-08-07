@@ -5,7 +5,6 @@ import UserBox from "./components/UserBox";
 import UserContext from "../context/users/userContext"; 
 const Users = () => {
   const { allusers, getallUser } = useContext(UserContext);
-  console.log("Users from context: ", allusers); // Log users from context
 
   useEffect(() => {
     getallUser();

@@ -1,6 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
 import React, { useState, useEffect } from 'react';
-import UserContext from "../context/users/UserState"
 
 const LoginForm = () => {
     const [credentials, setCredentials] = useState({ registrationNumber: "", password: "" });
@@ -30,7 +29,7 @@ const LoginForm = () => {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    registrationNumber: credentials.registrationNumber,
+                    email: credentials.email,
                     password: credentials.password
                 })
             });
@@ -74,19 +73,19 @@ const LoginForm = () => {
         <div>
             <form onSubmit={handleSubmit}>
                 <div className="mb-3">
-                    <label htmlFor="registrationNumber" className="form-label">
-                        Registration Number
+                    <label htmlFor="email" className="form-label">
+                        Email Address
                     </label>
                     <input
                         type="text"
-                        id="registrationNumber"
-                        value={credentials.registrationNumber}
+                        id="email"
+                        value={credentials.email}
                         onChange={onChange}
-                        name="registrationNumber"
+                        name="email"
                         className="form-control"
-                        aria-describedby="registrationNumberHelp"
+                        aria-describedby="emailHelp"
                     />
-                    <div id="registrationNumberHelp" className="form-text">
+                    <div id="emailHelp" className="form-text">
                         We'll never share your details with anyone else.
                     </div>
                 </div>

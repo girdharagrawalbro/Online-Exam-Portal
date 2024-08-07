@@ -64,9 +64,9 @@ const UserPanel = () => {
       const fetchUserApplications = async () => {
         try {
           const response = await fetch(`${host}/api/exams/user-applications/${user._id}`, {
-            method: 'GET',
+            method: "GET",
             headers: {
-              'Content-Type': 'application/json',
+              "Content-Type": "application/json",
             },
           });
           const applications = await response.json();
@@ -100,10 +100,12 @@ const UserPanel = () => {
       fetchUserExams();
     }
   }, [user, authToken]);
-  // Filter out ongoing exams that the user has already submitted
-  const filteredOngoingExams = ongoingExams.filter(
+
+  // Filter out ongoing exams that the user has already submitted and those that are not in user applications
+  const filteredOngoingExams = applications.length === 0 ? [] : ongoingExams.filter(
     (exam) =>
-      !userExams?.some((userExam) => userExam.examId === exam._id && userExam.isSubmitted)
+      userExams?.some((userExam) => userExam.examId === exam._id && !userExam.isSubmitted) &&
+      applications.some((application) => application.exam._id === exam._id && application.status === "ongoing")
   );
 
   // Handle applying for an exam

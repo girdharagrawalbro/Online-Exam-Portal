@@ -21,7 +21,6 @@ const UserResult = () => {
       };     
       fetchExamResult();
   }, []);
-console.log(examData)
   if (!userData || !examData ||!data) {
     return <h2 clssName="text-white mt-5">Loading...</h2>;
   }
