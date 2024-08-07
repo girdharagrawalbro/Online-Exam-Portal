@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import ExamContext from "./examContext";
 
 const ExamState = (props) => {
-  const host = "http://localhost:5000";
+  const host = "https://onlineexam-rcrg.onrender.com";
   const [error, setError] = useState(null);
 
   // State hooks for exams and applications

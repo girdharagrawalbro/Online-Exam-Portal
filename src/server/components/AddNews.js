@@ -15,7 +15,7 @@ const AddNews = ({ onClose, onAdd }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("http://localhost:5000/api/news/addnews", formData);
+      const response = await axios.post("https://onlineexam-rcrg.onrender.com/api/news/addnews", formData);
       onAdd(response.data); // Pass the new news to the parent component
     } catch (error) {
       console.error("Error adding news:", error);

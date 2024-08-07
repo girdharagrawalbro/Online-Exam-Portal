@@ -16,7 +16,7 @@ const UserStartExam = () => {
     if (!examId) return;
     const fetchExamData = async () => {
       try {
-        const examResponse = await axios.get(`http://localhost:5000/api/exams/${examId}`);
+        const examResponse = await axios.get(`https://onlineexam-rcrg.onrender.com/api/exams/${examId}`);
         setExamData(examResponse.data);
         setAnswers(
           examResponse.data.questions.reduce((acc, question, index) => {
@@ -39,7 +39,7 @@ const UserStartExam = () => {
 
     const fetchUserData = async () => {
       try {
-        const userResponse = await axios.get(`http://localhost:5000/api/auth/${userId}`);
+        const userResponse = await axios.get(`https://onlineexam-rcrg.onrender.com/api/auth/${userId}`);
         setUserData(userResponse.data);
         setLoading(false);
       } catch (err) {
@@ -60,7 +60,7 @@ const UserStartExam = () => {
   const handleSave = async () => {
     try {
       const formattedAnswers = Object.values(answers); // Convert object to array of answers
-      await axios.post(`http://localhost:5000/api/exams/${examId}/save`, { userId, answers: formattedAnswers });
+      await axios.post(`https://onlineexam-rcrg.onrender.com/api/exams/${examId}/save`, { userId, answers: formattedAnswers });
       alert('Exam saved successfully');
     } catch (err) {
       console.error('Error saving exam:', err);
@@ -70,7 +70,7 @@ const UserStartExam = () => {
   const handleSubmit = async () => {
     try {
       const formattedAnswers = Object.values(answers); // Convert object to array of answers
-      await axios.post(`http://localhost:5000/api/exams/${examId}/submit`, { userId, answers: formattedAnswers });
+      await axios.post(`https://onlineexam-rcrg.onrender.com/api/exams/${examId}/submit`, { userId, answers: formattedAnswers });
       alert('Exam submitted successfully! Result will be declared soon. Redirecting...');
       navigate('/');
     } catch (err) {

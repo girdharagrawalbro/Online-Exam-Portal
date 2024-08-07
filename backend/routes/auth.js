@@ -8,7 +8,7 @@ const bcrypt = require("bcryptjs");
 var jwt = require("jsonwebtoken");
 var fetchuser = require("../middleware/fetchuser");
 
-const JWT_SECRET = "girdharisagoodboy";
+const JWT_SECRET = process.env.JWT_SECRET
 const crypto = require('crypto');
 
 function generateRegistrationNumber() {

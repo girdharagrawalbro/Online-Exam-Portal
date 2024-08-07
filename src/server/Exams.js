@@ -40,7 +40,7 @@ const Exams = () => {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:5000/api/exams/${id}`);
+      await axios.delete(`https://onlineexam-rcrg.onrender.com/api/exams/${id}`);
       fetchExams(); // Refresh the exams list
     } catch (error) {
       console.error("Error deleting exam:", error);
@@ -61,7 +61,7 @@ const Exams = () => {
   
   const handleExamUpdate = async (updatedExam) => {
     try {
-      await axios.put(`http://localhost:5000/api/exams/${updatedExam._id}`, updatedExam);
+      await axios.put(`https://onlineexam-rcrg.onrender.com/api/exams/${updatedExam._id}`, updatedExam);
       fetchExams(); // Refresh the exams list
       setEditingExam(null);
     } catch (error) {

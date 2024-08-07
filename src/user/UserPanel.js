@@ -17,7 +17,7 @@ const UserPanel = () => {
   const [userExams, setUserExams] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showAlert, setShowAlert] = useState(false);
-  const host = "http://localhost:5000";
+  const host = "https://onlineexam-rcrg.onrender.com";
   const authToken = localStorage.getItem("token");
 
   // Redirect to login if not authenticated

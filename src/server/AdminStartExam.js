@@ -16,7 +16,7 @@ const AdminStartExam = () => {
 
     const fetchExamData = async () => {
       try {
-        const examResponse = await axios.get(`http://localhost:5000/api/exams/${examId}`);
+        const examResponse = await axios.get(`https://onlineexam-rcrg.onrender.com/api/exams/${examId}`);
         setExamData(examResponse.data);
         setLoading(false);
       } catch (err) {
@@ -39,7 +39,7 @@ const AdminStartExam = () => {
 
     if (timeString === examTime || timeString > examTime) {
       try {
-        await axios.post(`http://localhost:5000/api/exams/start/${examId}`);
+        await axios.post(`https://onlineexam-rcrg.onrender.com/api/exams/start/${examId}`);
         setExamStarted(true);
       } catch (err) {
         console.error("Error starting exam:", err);
