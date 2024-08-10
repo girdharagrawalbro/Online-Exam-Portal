@@ -8,7 +8,7 @@ const bcrypt = require("bcryptjs");
 var jwt = require("jsonwebtoken");
 var fetchuser = require("../middleware/fetchuser");
 
-const JWT_SECRET = "girdharisagoodboy";
+const JWT_SECRET = process.env.JWT_SECRET
 const crypto = require('crypto');
 
 function generateRegistrationNumber() {
@@ -103,7 +103,7 @@ router.post(
 router.post(
   "/login",
   [
-    body("registrationNumber", "Registration Number cannot be blank").exists(),
+    body("email", "Email Address can't be blank").exists(),
     body("password", "Password cannot be blank").exists(),
   ],
   async (req, res) => {
@@ -112,9 +112,9 @@ router.post(
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
-    const { registrationNumber, password } = req.body;
+    const { email, password } = req.body;
     try {
-      let user = await User.findOne({ registrationNumber });
+      let user = await User.findOne({ email });
       if (!user) {
         return res.status(400).json({ success, error: "Please login with correct credentials" });
       }
